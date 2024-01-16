@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -11,11 +12,13 @@ public class NavScript : MonoBehaviour
     [SerializeField] GameObject DestinationObjectPrefab;
     [SerializeField] NavMeshAgent agent;
 
-    Transform Destination;
-    GameObject DestObj;
+    [SerializeField] private float _speed;
+    Rigidbody rb;
+
     void Start()
     {
         DestinationObjectPrefab.SetActive(false);
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -23,7 +26,6 @@ public class NavScript : MonoBehaviour
     {
         
         MoveToMouseClick();
-
     }
 
     private void MoveToMouseClick()
@@ -31,6 +33,7 @@ public class NavScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out RaycastHit hit))
@@ -43,12 +46,22 @@ public class NavScript : MonoBehaviour
         }
     }
 
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Destination")
         {
             collision.gameObject.SetActive(false);
+            ToggleRotation();
+            ToggleRotation();
         }
     }
+
+    private void ToggleRotation()
+    {
+        rb.freezeRotation = !rb.freezeRotation;
+    }
+
 
 }
