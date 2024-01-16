@@ -7,29 +7,38 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class NavScript : MonoBehaviour
+public class GoToClick : MonoBehaviour
 {
+    private const string VELOCITY_ANIMATOR_PARAMETER = "Velocity";
+
     [SerializeField] GameObject DestinationObjectPrefab;
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Animator animator;
 
-    [SerializeField] private float _speed;
-    Rigidbody rb;
 
     void Start()
     {
         DestinationObjectPrefab.SetActive(false);
-        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        MoveToMouseClick();
+        if (IsSelected())
+        {
+            MoveToMouseClick();
+        }
+
+        if (!IsSelected())
+        {
+            animator.SetFloat(VELOCITY_ANIMATOR_PARAMETER, agent.velocity.magnitude);
+        }
     }
 
     private void MoveToMouseClick()
     {
+
+        animator.SetFloat(VELOCITY_ANIMATOR_PARAMETER, agent.velocity.magnitude);
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -38,6 +47,11 @@ public class NavScript : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
+                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Character"))
+                {
+                    return;
+                }
+
                 agent.SetDestination(hit.point);
                 DestinationObjectPrefab.transform.position = hit.point;
                 DestinationObjectPrefab.SetActive(true);
@@ -46,22 +60,18 @@ public class NavScript : MonoBehaviour
         }
     }
 
-
-
-    private void OnCollisionEnter(Collision collision)
+    private bool IsSelected()
     {
-        if (collision.gameObject.tag == "Destination")
-        {
-            collision.gameObject.SetActive(false);
-            ToggleRotation();
-            ToggleRotation();
-        }
+        if (GameManagar.instance.SelectedCharacter == gameObject)
+            return true;
+
+        return false;
     }
 
-    private void ToggleRotation()
-    {
-        rb.freezeRotation = !rb.freezeRotation;
-    }
+
+
+
+
 
 
 }
