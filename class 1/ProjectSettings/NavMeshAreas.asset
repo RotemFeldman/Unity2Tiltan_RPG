@@ -11,11 +11,11 @@ NavMeshProjectSettings:
     cost: 1
   - name: Jump
     cost: 2
-  - name: Lava
-    cost: 9
-  - name: 
+  - name: Mud
+    cost: 5
+  - name: HumanPath
     cost: 1
-  - name: 
+  - name: DwarfPath
     cost: 1
   - name: 
     cost: 1
@@ -75,7 +75,7 @@ NavMeshProjectSettings:
     agentTypeID: 0
     agentRadius: 0.8
     agentHeight: 0.5
-    agentSlope: 25
+    agentSlope: 38.5
     agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 2
@@ -94,7 +94,7 @@ NavMeshProjectSettings:
     agentRadius: 0.5
     agentHeight: 2
     agentSlope: 49.3
-    agentClimb: 0.75
+    agentClimb: 1.48
     ledgeDropHeight: 2
     maxJumpAcrossDistance: 5
     minRegionArea: 2
@@ -111,8 +111,8 @@ NavMeshProjectSettings:
     agentTypeID: -902729914
     agentRadius: 1
     agentHeight: 1
-    agentSlope: 49
-    agentClimb: 0.75
+    agentSlope: 36.1
+    agentClimb: 0.91
     ledgeDropHeight: 2
     maxJumpAcrossDistance: 0
     minRegionArea: 2
